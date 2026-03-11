@@ -3,220 +3,311 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TecnoProfit - Dashboard de Rentabilidad</title>
+    <title>TecnoProfit Pro | Dashboard de Rentabilidad</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        .glass-card { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); }
-        .input-focus:focus { border-color: #3b82f6; box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1); transition: all 0.2s; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #fcfcfd; }
+        .premium-card { background: white; border: 1px solid #f2f2f7; border-radius: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); }
+        .input-box { background: #f9fafb; border: 1px solid #f2f2f7; border-radius: 16px; transition: all 0.2s; }
+        .input-box:focus-within { border-color: #4f46e5; background: white; box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.08); }
         input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
+        .gateway-active { background: white; border-color: #4f46e5; color: #4f46e5; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.1); }
     </style>
 </head>
-<body class="bg-[#f8fafc] text-[#1e293b] min-h-screen">
+<body class="text-slate-900">
 
-    <nav class="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center sticky top-0 z-50">
-        <div class="flex items-center gap-2">
-            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white font-black text-xl italic">T</div>
-            <h1 class="font-bold text-lg tracking-tight">UNI<span class="text-blue-600">PROFIT</span></h1>
+    <nav class="max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <div class="w-12 h-12 bg-indigo-600 rounded-2xl flex items-center justify-center shadow-xl shadow-indigo-200">
+                <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+            </div>
+            <div>
+                <h1 class="text-xl font-extrabold tracking-tight">TECNO<span class="text-indigo-600">PROFIT</span></h1>
+                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-[0.2em]">Business Intelligence</p>
+            </div>
         </div>
-        <div class="text-xs font-semibold bg-blue-50 text-blue-700 px-3 py-1 rounded-full uppercase tracking-wider">
-            Calculadora de Margen V2.0
+        <div class="flex items-center gap-6">
+            <div class="text-right">
+                <span class="block text-[10px] font-bold text-slate-400 uppercase">Cotización USD</span>
+                <input type="number" id="dolarHoy" value="1430" oninput="calculate()" class="bg-transparent font-bold text-indigo-600 text-right w-16 outline-none text-sm">
+            </div>
         </div>
     </nav>
 
-    <main class="max-w-7xl mx-auto p-6 lg:p-10">
-        <div class="grid lg:grid-cols-12 gap-8">
+    <main class="max-w-7xl mx-auto px-6 pb-20 grid lg:grid-cols-12 gap-8">
+        
+        <div class="lg:col-span-7 space-y-6">
             
-            <div class="lg:col-span-8 space-y-6">
+            <div class="premium-card p-8">
+                <h2 class="text-sm font-black text-slate-400 uppercase tracking-widest mb-6 flex items-center gap-2">
+                    <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    Estructura Comercial
+                </h2>
                 
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                        <h2 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6 flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
-                            Estructura de Costos
-                        </h2>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-xs font-semibold text-gray-500 mb-1 ml-1">PRECIO DE VENTA ($)</label>
-                                <input type="number" id="precioVenta" value="117000" oninput="calculate()" class="w-full text-lg font-bold p-3 bg-gray-50 border border-gray-200 rounded-xl input-focus">
-                            </div>
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-xs font-semibold text-gray-500 mb-1 ml-1">COSTO PROD.</label>
-                                    <input type="number" id="costoProducto" value="45899" oninput="calculate()" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl input-focus font-medium">
-                                </div>
-                                <div>
-                                    <label class="block text-xs font-semibold text-gray-500 mb-1 ml-1">ENVÍO PROM.</label>
-                                    <input type="number" id="costoEnvio" value="8000" oninput="calculate()" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl input-focus font-medium">
-                                </div>
-                            </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="md:col-span-2 input-box p-5">
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">Precio de Venta Final</label>
+                        <div class="flex items-center">
+                            <span class="text-3xl font-black text-slate-300 mr-2">$</span>
+                            <input type="number" id="precioVenta" value="117000" oninput="calculate()" class="w-full text-4xl font-black bg-transparent outline-none">
                         </div>
                     </div>
-
-                    <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                        <h2 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6 flex items-center gap-2">
-                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"></path></svg>
-                            Marketing & Mercado
-                        </h2>
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-xs font-semibold text-gray-500 mb-1 ml-1">CPA OBJETIVO (AR$)</label>
-                                <input type="number" id="cpaPesos" value="10000" oninput="calculate()" class="w-full text-lg font-bold p-3 bg-blue-50/50 border border-blue-100 text-blue-700 rounded-xl input-focus">
-                            </div>
-                            <div>
-                                <label class="block text-xs font-semibold text-gray-500 mb-1 ml-1">COTIZACIÓN DÓLAR ($)</label>
-                                <input type="number" id="dolarHoy" value="1430" oninput="calculate()" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl input-focus font-medium">
-                            </div>
+                    <div class="input-box p-4">
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Costo Producto</label>
+                        <div class="flex items-center">
+                            <span class="text-lg font-bold text-slate-300 mr-1">$</span>
+                            <input type="number" id="costoProducto" value="45899" oninput="calculate()" class="w-full text-xl font-bold bg-transparent outline-none">
                         </div>
                     </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                    <h2 class="text-sm font-bold text-gray-400 uppercase tracking-widest mb-6 flex items-center gap-2">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2z"></path></svg>
-                        Tasas, Impuestos y Comisiones (%)
-                    </h2>
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                        <div class="p-4 bg-gray-50 rounded-xl">
-                            <label class="block text-[10px] font-bold text-gray-400 mb-1 uppercase">Pasarela/Cuotas</label>
-                            <input type="number" id="pasarela" value="20" oninput="calculate()" class="w-full bg-transparent text-xl font-bold outline-none">
-                        </div>
-                        <div class="p-4 bg-gray-50 rounded-xl">
-                            <label class="block text-[10px] font-bold text-gray-400 mb-1 uppercase">IIBB</label>
-                            <input type="number" id="iibb" value="4.5" oninput="calculate()" class="w-full bg-transparent text-xl font-bold outline-none">
-                        </div>
-                        <div class="p-4 bg-gray-50 rounded-xl">
-                            <label class="block text-[10px] font-bold text-gray-400 mb-1 uppercase">Plataforma</label>
-                            <input type="number" id="plataformas" value="0" oninput="calculate()" class="w-full bg-transparent text-xl font-bold outline-none">
-                        </div>
-                        <div class="p-4 bg-gray-50 rounded-xl">
-                            <label class="block text-[10px] font-bold text-gray-400 mb-1 uppercase">IVA</label>
-                            <input type="number" id="iva" value="21" oninput="calculate()" class="w-full bg-transparent text-xl font-bold outline-none">
+                    <div class="input-box p-4">
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1">Costo Envío</label>
+                        <div class="flex items-center">
+                            <span class="text-lg font-bold text-slate-300 mr-1">$</span>
+                            <input type="number" id="costoEnvio" value="8000" oninput="calculate()" class="w-full text-xl font-bold bg-transparent outline-none">
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="lg:col-span-4 space-y-6">
+            <div class="premium-card p-8">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-sm font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                        <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a2 2 0 002-2V5a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        Plataforma de Pago
+                    </h2>
+                    <div class="bg-slate-100 p-1 rounded-xl flex gap-1">
+                        <button onclick="setGateway('pagoNube')" id="btnPN" class="px-4 py-2 rounded-lg text-xs font-bold transition-all">Pago Nube</button>
+                        <button onclick="setGateway('mercadoPago')" id="btnMP" class="px-4 py-2 rounded-lg text-xs font-bold transition-all">Mercado Pago</button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="input-box p-4">
+                        <label class="block text-[9px] font-bold text-slate-400 uppercase mb-1">Tasa Pasarela %</label>
+                        <input type="number" id="pagoComision" value="20" oninput="calculate()" class="w-full text-lg font-bold bg-transparent outline-none text-indigo-600">
+                    </div>
+                    <div class="input-box p-4">
+                        <label class="block text-[9px] font-bold text-slate-400 uppercase mb-1">Fee Plataforma %</label>
+                        <input type="number" id="tiendaNubeComision" value="0" oninput="calculate()" class="w-full text-lg font-bold bg-transparent outline-none">
+                    </div>
+                    <div class="input-box p-4">
+                        <label class="block text-[9px] font-bold text-slate-400 uppercase mb-1">IIBB %</label>
+                        <input type="number" id="iibb" value="4.5" oninput="calculate()" class="w-full text-lg font-bold bg-transparent outline-none">
+                    </div>
+                    <div class="input-box p-4">
+                        <label class="block text-[9px] font-bold text-slate-400 uppercase mb-1">IVA %</label>
+                        <input type="number" id="iva" value="21" oninput="calculate()" class="w-full text-lg font-bold bg-transparent outline-none">
+                    </div>
+                </div>
+                <div id="gatewayAlert" class="mt-4 p-3 bg-emerald-50 rounded-xl text-[10px] text-emerald-700 font-bold flex items-center gap-2">
+                    <span class="flex h-2 w-2 rounded-full bg-emerald-400"></span>
+                    Configuración optimizada: Ahorras fee de plataforma.
+                </div>
+            </div>
+
+            <div class="premium-card p-8 bg-slate-900 text-white shadow-2xl shadow-slate-200">
+                <div class="flex justify-between items-center mb-6">
+                    <h2 class="text-sm font-black text-indigo-400 uppercase tracking-widest">Inversión Ads</h2>
+                    <span class="text-[10px] bg-white/10 px-2 py-1 rounded text-slate-400" id="resCpaUsd">U$S 0.00</span>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-400 uppercase mb-2">CPA (Costo por Compra)</label>
+                        <div class="flex items-center bg-white/5 border border-white/10 rounded-2xl p-4">
+                            <span class="text-2xl font-bold text-slate-500 mr-2">$</span>
+                            <input type="number" id="cpaPesos" value="10000" oninput="calculate()" class="w-full text-3xl font-black bg-transparent outline-none text-white">
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="flex justify-between text-xs">
+                            <span class="text-slate-400 font-bold uppercase">ROAS Actual</span>
+                            <span class="text-white font-black text-xl" id="resRoasActual">0.00</span>
+                        </div>
+                        <div class="w-full h-2 bg-white/10 rounded-full overflow-hidden">
+                            <div id="roasBar" class="h-full bg-indigo-500 rounded-full transition-all duration-700" style="width: 50%"></div>
+                        </div>
+                        <p class="text-[10px] text-slate-500 leading-tight">Métrica de rendimiento basada en CPA e ingresos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="lg:col-span-5 space-y-6">
+            
+            <div class="premium-card p-8 sticky top-6 overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2" id="headerStatus"></div>
                 
-                <div id="resultCard" class="bg-white p-8 rounded-[2rem] shadow-xl border border-gray-100 relative overflow-hidden transition-all duration-500">
-                    <div id="profitBadge" class="absolute top-4 right-4 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest">Sano</div>
-                    
-                    <h3 class="text-gray-400 text-xs font-bold uppercase tracking-widest mb-1">Utilidad Neta por Venta</h3>
-                    <div class="flex items-baseline gap-2 mb-6">
-                        <span class="text-5xl font-extrabold tracking-tighter" id="resTotalFinal">$0</span>
-                    </div>
+                <p class="text-[11px] font-black text-slate-400 uppercase tracking-widest mb-1">Resultado Neto Final</p>
+                <div class="flex items-baseline gap-2 mb-8">
+                    <h2 class="text-6xl font-black tracking-tighter" id="resTotalFinal">$0</h2>
+                </div>
 
-                    <div class="grid grid-cols-2 gap-4 pt-6 border-t border-gray-100">
-                        <div>
-                            <p class="text-[10px] font-bold text-gray-400 uppercase">Rentabilidad</p>
-                            <p class="text-xl font-black" id="resRentabilidad">0%</p>
+                <div class="mb-10">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="text-[10px] font-bold text-slate-400 uppercase tracking-tighter">Desglose de Facturación</h3>
+                        <span id="resRentabilidad" class="text-xs font-black px-2 py-1 rounded-lg">0%</span>
+                    </div>
+                    <div class="w-full h-6 flex rounded-xl overflow-hidden shadow-inner bg-slate-100">
+                        <div id="barProd" class="bg-slate-300 transition-all duration-1000" title="Costo Producto"></div>
+                        <div id="barImp" class="bg-indigo-300 transition-all duration-1000" title="Impuestos y Fees"></div>
+                        <div id="barMkt" class="bg-slate-800 transition-all duration-1000" title="Marketing"></div>
+                        <div id="barProfit" class="bg-emerald-500 transition-all duration-1000" title="Ganancia"></div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-y-2 mt-4">
+                        <div class="flex items-center gap-2 text-[10px] font-bold text-slate-500">
+                            <span class="w-2 h-2 rounded-full bg-slate-300"></span> Producto/Envío
                         </div>
-                        <div>
-                            <p class="text-[10px] font-bold text-gray-400 uppercase">CPA en USD</p>
-                            <p class="text-xl font-black" id="resCpaUsd">U$S 0</p>
+                        <div class="flex items-center gap-2 text-[10px] font-bold text-slate-500">
+                            <span class="w-2 h-2 rounded-full bg-indigo-300"></span> Impuestos/Fees
+                        </div>
+                        <div class="flex items-center gap-2 text-[10px] font-bold text-slate-500">
+                            <span class="w-2 h-2 rounded-full bg-slate-800"></span> Marketing
+                        </div>
+                        <div class="flex items-center gap-2 text-[10px] font-bold text-slate-500">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500"></span> Ganancia Real
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-slate-900 rounded-[2rem] p-8 text-white shadow-2xl">
-                    <h3 class="text-blue-400 text-[10px] font-bold uppercase tracking-[0.2em] mb-6">Métricas de Escalado</h3>
-                    
-                    <div class="space-y-6">
-                        <div class="flex justify-between items-center">
+                <hr class="border-slate-100 mb-8">
+
+                <div class="space-y-6">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <p class="text-xs font-bold text-slate-400 uppercase">Break-even ROAS</p>
+                            <p class="text-2xl font-black" id="resRoasObjetivo">0.00</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs font-bold text-slate-400 uppercase">Utilidad Bruta</p>
+                            <p class="text-xl font-bold" id="resUtilidadBruta">$0</p>
+                        </div>
+                    </div>
+
+                    <div id="insightCard" class="p-5 rounded-2xl bg-indigo-50 border border-indigo-100">
+                        <div class="flex gap-3">
+                            <div class="text-indigo-600 mt-1" id="insightIcon">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
                             <div>
-                                <p class="text-gray-400 text-[10px] font-bold uppercase">ROAS Actual</p>
-                                <p class="text-3xl font-bold" id="resRoasActual">0.00</p>
+                                <h4 class="text-xs font-black text-indigo-900 uppercase mb-1" id="insightTitle">Análisis del Margen</h4>
+                                <p class="text-[11px] text-indigo-700 leading-relaxed font-medium" id="insightDesc">Ingresa los datos para ver recomendaciones.</p>
                             </div>
-                            <div class="text-right">
-                                <p class="text-gray-400 text-[10px] font-bold uppercase">Utilidad Bruta</p>
-                                <p class="text-lg font-semibold text-gray-200" id="resUtilidadBruta">$0</p>
-                            </div>
-                        </div>
-
-                        <div class="p-5 bg-white/5 rounded-2xl border border-white/10">
-                            <div class="flex justify-between mb-2">
-                                <span class="text-orange-400 text-[10px] font-bold uppercase tracking-wider">ROAS de Equilibrio</span>
-                                <span class="text-white font-bold" id="resRoasObjetivo">0.00</span>
-                            </div>
-                            <div class="w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-                                <div id="roasBar" class="bg-orange-500 h-full transition-all duration-1000" style="width: 50%"></div>
-                            </div>
-                            <p class="text-[9px] text-gray-500 mt-3 leading-relaxed">
-                                Este es tu punto de quiebre. Si tu ROAS en Facebook/TikTok es menor a este número, estás operando a pérdida.
-                            </p>
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </main>
 
     <script>
+        let currentGateway = 'pagoNube';
+
+        function setGateway(type) {
+            currentGateway = type;
+            const btnPN = document.getElementById('btnPN');
+            const btnMP = document.getElementById('btnMP');
+            const alert = document.getElementById('gatewayAlert');
+
+            if(type === 'pagoNube') {
+                btnPN.className = "px-4 py-2 rounded-lg text-xs font-bold transition-all bg-white shadow-sm text-indigo-600";
+                btnMP.className = "px-4 py-2 rounded-lg text-xs font-bold transition-all text-slate-400";
+                document.getElementById('pagoComision').value = 20;
+                document.getElementById('tiendaNubeComision').value = 0;
+                alert.className = "mt-4 p-3 bg-emerald-50 rounded-xl text-[10px] text-emerald-700 font-bold flex items-center gap-2";
+                alert.innerHTML = `<span class="flex h-2 w-2 rounded-full bg-emerald-400"></span> ¡0% fee de plataforma usando Pago Nube!`;
+            } else {
+                btnMP.className = "px-4 py-2 rounded-lg text-xs font-bold transition-all bg-white shadow-sm text-indigo-600";
+                btnPN.className = "px-4 py-2 rounded-lg text-xs font-bold transition-all text-slate-400";
+                document.getElementById('pagoComision').value = 25;
+                document.getElementById('tiendaNubeComision').value = 2;
+                alert.className = "mt-4 p-3 bg-orange-50 rounded-xl text-[10px] text-orange-700 font-bold flex items-center gap-2";
+                alert.innerHTML = `<span class="flex h-2 w-2 rounded-full bg-orange-400"></span> Estás pagando fee extra por gateway externo.`;
+            }
+            calculate();
+        }
+
         function calculate() {
-            // Inputs numéricos
             const precioVenta = parseFloat(document.getElementById('precioVenta').value) || 0;
             const costoProducto = parseFloat(document.getElementById('costoProducto').value) || 0;
             const costoEnvio = parseFloat(document.getElementById('costoEnvio').value) || 0;
             const cpaPesos = parseFloat(document.getElementById('cpaPesos').value) || 0;
             const dolarHoy = parseFloat(document.getElementById('dolarHoy').value) || 1;
 
-            // Porcentajes
-            const pPasarela = parseFloat(document.getElementById('pasarela').value) || 0;
-            const pIibb = parseFloat(document.getElementById('iibb').value) || 0;
-            const pPlataformas = parseFloat(document.getElementById('plataformas').value) || 0;
-            const pIva = parseFloat(document.getElementById('iva').value) || 0;
+            const pG = parseFloat(document.getElementById('pagoComision').value) || 0;
+            const pTN = parseFloat(document.getElementById('tiendaNubeComision').value) || 0;
+            const pI = parseFloat(document.getElementById('iibb').value) || 0;
+            const pV = parseFloat(document.getElementById('iva').value) || 0;
 
-            // Lógica basada en tu CSV
-            const sumPorcentajes = (pPasarela + pIibb + pPlataformas + pIva) / 100;
-            const costosVariablesMonto = precioVenta * sumPorcentajes;
+            const totalFeesPerc = (pG + pTN + pI + pV) / 100;
+            const montoFees = precioVenta * totalFeesPerc;
+            const utilidadBruta = precioVenta - montoFees - costoProducto - costoEnvio;
+            const netoFinal = utilidadBruta - cpaPesos;
             
-            // Utilidad antes de pauta
-            const utilidadBruta = precioVenta - costosVariablesMonto - costoProducto - costoEnvio;
-            
-            // Total Final (después de CPA)
-            const totalFinal = utilidadBruta - cpaPesos;
-            
-            // Métricas
-            const rentabilidad = precioVenta > 0 ? (totalFinal / precioVenta) * 100 : 0;
-            const cpaUsd = cpaPesos / dolarHoy;
+            const rentabilidad = precioVenta > 0 ? (netoFinal / precioVenta) * 100 : 0;
             const roasActual = cpaPesos > 0 ? (precioVenta / cpaPesos) : 0;
-            const roasObjetivo = utilidadBruta > 0 ? (precioVenta / utilidadBruta) : 0;
+            const roasObj = utilidadBruta > 0 ? (precioVenta / utilidadBruta) : 0;
 
-            // Renderizar Resultados
+            // UI Principal
+            document.getElementById('resTotalFinal').innerText = `$ ${Math.round(netoFinal).toLocaleString('es-AR')}`;
             document.getElementById('resUtilidadBruta').innerText = `$ ${Math.round(utilidadBruta).toLocaleString('es-AR')}`;
-            document.getElementById('resTotalFinal').innerText = `$ ${Math.round(totalFinal).toLocaleString('es-AR')}`;
             document.getElementById('resRentabilidad').innerText = `${rentabilidad.toFixed(1)}%`;
-            document.getElementById('resCpaUsd').innerText = `U$S ${cpaUsd.toFixed(2)}`;
+            document.getElementById('resCpaUsd').innerText = `U$S ${(cpaPesos/dolarHoy).toFixed(2)}`;
             document.getElementById('resRoasActual').innerText = roasActual.toFixed(2);
-            document.getElementById('resRoasObjetivo').innerText = roasObjetivo.toFixed(2);
+            document.getElementById('resRoasObjetivo').innerText = roasObj.toFixed(2);
 
-            // UI Dinámica
-            const card = document.getElementById('resultCard');
-            const badge = document.getElementById('profitBadge');
+            // Colores y Barra de ROAS
+            const statusH = document.getElementById('headerStatus');
             const roasBar = document.getElementById('roasBar');
+            const finalVal = document.getElementById('resTotalFinal');
+            const rentBadge = document.getElementById('resRentabilidad');
 
-            // Actualizar barra de ROAS (visual)
-            const roasPercentage = Math.min((roasActual / (roasObjetivo * 2)) * 100, 100);
-            roasBar.style.width = `${roasPercentage}%`;
-
-            if (totalFinal > 0) {
-                card.style.borderColor = '#bbf7d0'; // verde
-                document.getElementById('resTotalFinal').className = "text-5xl font-extrabold tracking-tighter text-green-600";
-                badge.innerText = "Rentable";
-                badge.className = "absolute top-4 right-4 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-green-100 text-green-700";
+            if(netoFinal > 0) {
+                statusH.className = "absolute top-0 left-0 w-full h-2 bg-emerald-500";
+                finalVal.className = "text-6xl font-black tracking-tighter text-slate-900";
+                rentBadge.className = "text-xs font-black px-2 py-1 rounded-lg bg-emerald-100 text-emerald-700";
             } else {
-                card.style.borderColor = '#fecaca'; // rojo
-                document.getElementById('resTotalFinal').className = "text-5xl font-extrabold tracking-tighter text-red-600";
-                badge.innerText = "Pérdida";
-                badge.className = "absolute top-4 right-4 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest bg-red-100 text-red-700";
+                statusH.className = "absolute top-0 left-0 w-full h-2 bg-red-500";
+                finalVal.className = "text-6xl font-black tracking-tighter text-red-600";
+                rentBadge.className = "text-xs font-black px-2 py-1 rounded-lg bg-red-100 text-red-700";
+            }
+
+            // Desglose de Barra
+            const pProd = ( (costoProducto + costoEnvio) / precioVenta) * 100;
+            const pFees = (montoFees / precioVenta) * 100;
+            const pMkt = (cpaPesos / precioVenta) * 100;
+            const pProf = Math.max(0, rentabilidad);
+
+            document.getElementById('barProd').style.width = `${pProd}%`;
+            document.getElementById('barImp').style.width = `${pFees}%`;
+            document.getElementById('barMkt').style.width = `${pMkt}%`;
+            document.getElementById('barProfit').style.width = `${pProf}%`;
+
+            const roasEfficiency = Math.min((roasActual / (roasObj * 1.5)) * 100, 100);
+            roasBar.style.width = `${roasEfficiency}%`;
+            roasBar.className = roasActual < roasObj ? "h-full bg-red-500 rounded-full transition-all" : "h-full bg-indigo-500 rounded-full transition-all";
+
+            // Insight Logic
+            const inCard = document.getElementById('insightCard');
+            const inTitle = document.getElementById('insightTitle');
+            const inDesc = document.getElementById('insightDesc');
+
+            if(roasActual < roasObj) {
+                inCard.className = "p-5 rounded-2xl bg-red-50 border border-red-100";
+                inTitle.innerText = "¡ROAS en zona crítica!";
+                inDesc.innerText = `Tu ROAS actual (${roasActual.toFixed(2)}) es menor al de equilibrio (${roasObj.toFixed(2)}). Estás perdiendo dinero en cada venta de pauta.`;
+            } else if(rentabilidad < 10) {
+                inCard.className = "p-5 rounded-2xl bg-orange-50 border border-orange-100";
+                inTitle.innerText = "Margen ajustado";
+                inDesc.innerText = `Tu rentabilidad es del ${rentabilidad.toFixed(1)}%. Considera subir el precio o renegociar costos de envío.`;
+            } else {
+                inCard.className = "p-5 rounded-2xl bg-emerald-50 border border-emerald-100";
+                inTitle.innerText = "Operación Saludable";
+                inDesc.innerText = `Tienes un margen sólido. Es un buen momento para escalar el presupuesto de anuncios.`;
             }
         }
 
-        // Init
-        calculate();
+        window.onload = () => setGateway('pagoNube');
     </script>
 </body>
 </html>
